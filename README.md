@@ -10,7 +10,6 @@ This guide walks you through the steps required to containerize a **Baby Tools S
 2. [Quickstart](#quickstart)   
 3. [Dockerfile Setup](#dockerfile-setup)   
 4. [Building the Docker Image](#building-the-docker-image)  
-5. [Accessing the Application](#accessing-the-application)  
 
 ---
 
@@ -56,7 +55,7 @@ This section explains how to create a Dockerfile to containerize the **Baby Tool
 
 ### Step-by-Step Dockerfile
 
-1. **Create a file named `Dockerfile` in the directory babyshop_app/
+1. **Create a file named `Dockerfile` in the directory babyshop_app/**
 
 2. **Add the following contents into the Dockerfile:**
 
@@ -115,9 +114,9 @@ Set the default command to run the Django development server, making it accessib
 CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
 ```
 
-## 4. Building the image
+## 4. Building the Docker Image
 
-After creating the Dockerfile, you need to build the Docker image that packages your Baby Tools Shop app by exuting the following command:
+After creating the Dockerfile, you need to build the Docker image that packages your Baby Tools Shop app by executing the following command:
 
 ```Bash
 docker build -t baby_shop:latest .
