@@ -6,14 +6,17 @@ This guide walks you through the steps required to containerize a **Baby Tools S
 
 ## Table of Contents
 
-1. [Requirements](#requirements)  
-2. [Quickstart](#quickstart)   
-3. [Dockerfile Setup](#dockerfile-setup)   
-4. [Building the Docker Image](#building-the-docker-image)  
+1. [Prerequisites](#prerequisites)  
+2. [Quickstart](#quickstart)  
+3. [Usage](#usage)  
+   - 3.1 [Creating a Django Superuser](#31-creating-a-django-superuser)  
+   - 3.2 [Logging into Django Admin and Managing Products](#31-logging-into-django-admin-and-managing-products)  
+4. [Explanation](#explanation)  
+   - 4.1 [Dockerfile Setup](#41-dockerfile-setup)
 
 ---
 
-## 1. Requirements
+## 1. Prerequisites
 
 Ensure the following are installed on your **Ubuntu** system:
 
@@ -25,10 +28,6 @@ Ensure the following are installed on your **Ubuntu** system:
   sudo apt install -y docker
     ```
   
-- **Python**  
-  ```bash
-  sudo apt install -y python3.10
-    ```
 ## 2. Quickstart 
 
 Follow these steps to quickly run the Baby Tools Shop app using Docker:
@@ -37,25 +36,68 @@ Follow these steps to quickly run the Baby Tools Shop app using Docker:
 # Step 1: Clone the project (or copy files into a folder)
 git clone https://github.com/e1pmiS/baby-tools-shop.git
 cd baby-tools-shop/babyshop_app
-
+```
+```bash
 # Step 2: Build the Docker image
 docker build -t baby_shop:latest .
-
+```
+```bash
 # Step 3: Run the container
 docker run -it -p 8025:8000 baby_shop:latest
 ```
 
 After Step 3, the Baby Tools Shop Django application will be running inside a Docker container, and it will be accessible externally on port 8025 of your host machine.
 
-## 3. Dockerfile Setup
+## 3. Usage
 
-This section explains how to create a Dockerfile to containerize the **Baby Tools Shop** Django application.
+### 3.1 Creating a Django Superuser
+
+To manage products and categories in the admin interface, you need a Django superuser.
+
+Follow these steps:
+
+1. **Access the running container's shell**:
+
+```bash
+docker exec -it <container_id> bash
+```
+2. **Run the Django management command**:
+
+```bash
+python3 manage.py createsuperuser
+```
+Follow the prompt and once complete, a superuser account will be created in the database.
+
+### 3.2 Logging into Django Admin and Managing Products
+
+After creating a superuser, you can log in and start managing your shop.
+
+1. Open your browser and go to:
+
+```bash
+http://localhost:8025/admin
+```
+
+2. Log in using the superuser credentials you just created.
+
+3. In the Django admin dashboard, you can:
+
+* Add Categories (e.g., Strollers, Toys, Clothing)
+
+* Add Products under specific categories
+
+* Edit or delete existing items
+
+
+## 4. Explanation
+
+This section explains how to create a Dockerfile to containerize a Django application.
 
 ---
 
-### Step-by-Step Dockerfile
+### 4.1 Dockerfile Setup
 
-1. **Create a file named `Dockerfile` in the directory babyshop_app/**
+1. **Create a file named `Dockerfile` in the root directory**
 
 2. **Add the following contents into the Dockerfile:**
 
@@ -102,7 +144,7 @@ Copy all your project files into the container’s working directory:
 COPY . $WORKDIR
 ```
 
-Expose port 8000 so the container can listen for incoming traffic on Django’s default port:
+Expose port 8000 to allow external access to the Django development server running inside the container:
 
 ```Dockerfile
 EXPOSE 8000
@@ -112,12 +154,4 @@ Set the default command to run the Django development server, making it accessib
 
 ```Dockerfile
 CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
-```
-
-## 4. Building the Docker Image
-
-After creating the Dockerfile, you need to build the Docker image that packages your Baby Tools Shop app by executing the following command:
-
-```Bash
-docker build -t baby_shop:latest .
 ```

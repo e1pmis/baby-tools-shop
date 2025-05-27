@@ -12,11 +12,11 @@ WORKDIR /babyshop_app
 RUN apt-get update && apt-get install -y
 
 # Install Python dependencies
-COPY requirements.txt /babyshop_app/
+COPY requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
 # Copy project files
-COPY . $WORKDIR
+COPY .  ${WORKDIR}
 
 # Expose Django dev server port
 EXPOSE 8000
