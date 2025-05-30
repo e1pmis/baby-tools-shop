@@ -17,9 +17,7 @@ This guide walks you through the steps required to containerize a **Baby Tools S
 
 ---
 
-## 1. Prerequisites
-
-Ensure the following are installed on your **Ubuntu** system:
+## Prerequisites
 
 ### Software
 
@@ -29,7 +27,7 @@ Ensure the following are installed on your **Ubuntu** system:
   sudo apt install -y docker
     ```
   
-## 2. Quickstart 
+## Quickstart 
 
 Follow these steps to quickly run the Baby Tools Shop app using Docker:
 
@@ -49,7 +47,7 @@ docker run -it -p 8025:8000 baby_shop:latest
 
 After Step 3, the Baby Tools Shop Django application will be running inside a Docker container, and it will be accessible externally on port 8025 of your host machine.
 
-## 3. Usage
+## Usage
 
 ### 3.1 Creating a Django Superuser
 
@@ -105,7 +103,7 @@ Open your [settings.py](settings.py) file and find the ALLOWED_HOSTS setting. Ad
 ALLOWED_HOSTS = ['your.server.ip.address', 'localhost'];
 ```
 
-## 4. Explanation
+## Explanation
 
 This section explains how to create a Dockerfile to containerize a Django application.
 
