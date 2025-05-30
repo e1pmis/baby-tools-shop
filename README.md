@@ -10,7 +10,8 @@ This guide walks you through the steps required to containerize a **Baby Tools S
 2. [Quickstart](#quickstart)  
 3. [Usage](#usage)  
    - 3.1 [Creating a Django Superuser](#31-creating-a-django-superuser)  
-   - 3.2 [Logging into Django Admin and Managing Products](#31-logging-into-django-admin-and-managing-products)  
+   - 3.2 [Logging into Django Admin and Managing Products](#32-logging-into-django-admin-and-managing-products)
+   - 3.3 [External Deployment](#33-external-deployment)
 4. [Explanation](#explanation)  
    - 4.1 [Dockerfile Setup](#41-dockerfile-setup)
 
@@ -56,12 +57,18 @@ To manage products and categories in the admin interface, you need a Django supe
 
 Follow these steps:
 
-1. **Access the running container's shell**:
+1. **List running containers to find your Django container ID**:
+
+```bash
+docker container list -a
+```
+
+2. **Access the running container's shell**:
 
 ```bash
 docker exec -it <container_id> bash
 ```
-2. **Run the Django management command**:
+3. **Run the Django management command**:
 
 ```bash
 python3 manage.py createsuperuser
@@ -88,6 +95,15 @@ http://localhost:8025/admin
 
 * Edit or delete existing items
 
+### 3.3 External Deployment
+
+To publish the server externally, you need to configure Django to allow requests from your external IP address or domain.
+
+Open your [settings.py](settings.py) file and find the ALLOWED_HOSTS setting. Add your server's IP address or domain name:
+
+```javascript
+ALLOWED_HOSTS = ['your.server.ip.address', 'localhost'];
+```
 
 ## 4. Explanation
 
@@ -97,9 +113,7 @@ This section explains how to create a Dockerfile to containerize a Django applic
 
 ### 4.1 Dockerfile Setup
 
-1. **Create a file named `Dockerfile` in the root directory**
-
-2. **Add the following contents into the Dockerfile:**
+Create a file named `Dockerfile` in the root directory.
 
 Choose a base image that provides Python 3.10 to ensure the right runtime environment:
 
