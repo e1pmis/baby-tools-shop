@@ -1,5 +1,5 @@
-# Use official Python 3.10 image
-FROM python:3.10
+# Use official Python 3.10-alpine image
+FROM python:3.10-alpine
 
 # Environment settings
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -16,7 +16,7 @@ COPY requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
 # Copy project files
-COPY .  ${WORKDIR}
+COPY . ${WORKDIR}
 
 # Expose Django dev server port
 EXPOSE 8000
