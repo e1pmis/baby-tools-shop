@@ -1,5 +1,5 @@
-# Use official Python 3.10-alpine image
-FROM python:3.10-alpine
+# Use official Python 3.10-slim image
+FROM python:3.10-slim
 
 # Environment settings
 ENV PYTHONDONTWRITEBYTECODE=1
