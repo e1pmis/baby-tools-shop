@@ -99,8 +99,8 @@ To publish the server externally, you need to configure Django to allow requests
 
 Open your [settings.py](settings.py) file and find the ALLOWED_HOSTS setting. Add your server's IP address or domain name:
 
-```javascript
-ALLOWED_HOSTS = ['your.server.ip.address', 'localhost'];
+```python
+ALLOWED_HOSTS = ['your.server.ip.address', 'localhost']
 ```
 
 ## Explanation
@@ -113,10 +113,10 @@ This section explains how to create a Dockerfile to containerize a Django applic
 
 Create a file named `Dockerfile` in the root directory.
 
-Choose a base image that provides Python 3.10 to ensure the right runtime environment:
+Choose a base image that provides Python 3.10-slim to ensure the right runtime environment with minimal installations:
 
 ```Dockerfile
-FROM python:3.10
+FROM python:3.10-slim
 ```
 
 Set environment variables to prevent Python from creating .pyc files and to ensure output logs show immediately:
@@ -132,16 +132,10 @@ Define a working directory inside the container where all commands will be run a
 WORKDIR /babyshop_app
 ```
 
-Update system packages and install any needed OS dependencies:
-
-```Dockerfile
-RUN apt-get update && apt-get install -y
-```
-
 Copy your Python dependencies file so you can install them inside the container:
 
 ```Dockerfile
-COPY requirements.txt /babyshop_app/
+COPY requirements.txt .
 ```
 
 Upgrade pip and install the Python packages listed in requirements.txt:
@@ -162,8 +156,8 @@ Expose port 8000 to allow external access to the Django development server runni
 EXPOSE 8000
 ```
 
-Set the default command to run the Django development server, making it accessible from any IP:
+Set the default command to run database migrations and then start the Django development server, making it accessible from any IP:
 
 ```Dockerfile
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000
 ```
