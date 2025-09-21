@@ -1,47 +1,49 @@
-# Containerizing Baby Tools Shop with Docker
+# Baby Tools Shop - Docker setup
 
-This guide walks you through the steps required to containerize a **Baby Tools Shop** application using Docker. It covers setting up the Docker environment, writing the Dockerfile, building the image, and running the container.
+This guide walks you through the steps required to containerize a Django application using Docker. It covers setting up the Docker environment, writing Dockerfile, building the image, and running the container.
 
 ---
 
 ## Table of Contents
 
-1. [Prerequisites](#prerequisites)  
-2. [Quickstart](#quickstart)  
-3. [Usage](#usage)  
-   - 3.1 [Creating a Django Superuser](#31-creating-a-django-superuser)  
-   - 3.2 [Logging into Django Admin and Managing Products](#32-logging-into-django-admin-and-managing-products)
-   - 3.3 [External Deployment](#33-external-deployment)
-4. [Explanation](#explanation)  
-   - 4.1 [Dockerfile Setup](#41-dockerfile-setup)
+- [Baby Tools Shop - Docker setup](#baby-tools-shop---docker-setup)
+  - [Table of Contents](#table-of-contents)
+  - [Prerequisites](#prerequisites)
+  - [Quickstart](#quickstart)
+  - [Usage](#usage)
+    - [Creating a Django Superuser](#creating-a-django-superuser)
+    - [Logging into Django Admin and Managing Products](#logging-into-django-admin-and-managing-products)
+    - [External Deployment](#external-deployment)
+  - [Explanation](#explanation)
+    - [Dockerfile Setup](#dockerfile-setup)
 
 ---
 
 ## Prerequisites
 
-### Software
-
 - **Docker**  
-  ```bash
-  sudo apt update
-  sudo apt install -y docker
-    ```
-  
+
+---
+
 ## Quickstart 
 
 Follow these steps to quickly run the Baby Tools Shop app using Docker:
 
+1. Clone the project (or copy files into a folder)
 ```bash
-# Step 1: Clone the project (or copy files into a folder)
 git clone https://github.com/e1pmiS/baby-tools-shop.git
 cd baby-tools-shop/babyshop_app
 ```
+
+2. Build the Docker image
+
 ```bash
-# Step 2: Build the Docker image
 docker build -t baby_shop:latest .
 ```
+
+3. Run the container
+   
 ```bash
-# Step 3: Run the container
 docker run -it -p 8025:8000 baby_shop:latest
 ```
 
@@ -49,9 +51,9 @@ After Step 3, the Baby Tools Shop Django application will be running inside a Do
 
 ## Usage
 
-### 3.1 Creating a Django Superuser
+### Creating a Django Superuser
 
-To manage products and categories in the admin interface, you need a Django superuser.
+To manage products and categories on the admin interface, you need a Django superuser.
 
 Follow these steps:
 
@@ -73,7 +75,7 @@ python3 manage.py createsuperuser
 ```
 Follow the prompt and once complete, a superuser account will be created in the database.
 
-### 3.2 Logging into Django Admin and Managing Products
+### Logging into Django Admin and Managing Products
 
 After creating a superuser, you can log in and start managing your shop.
 
@@ -93,7 +95,7 @@ http://localhost:8025/admin
 
 * Edit or delete existing items
 
-### 3.3 External Deployment
+### External Deployment
 
 To publish the server externally, you need to configure Django to allow requests from your external IP address or domain.
 
@@ -109,7 +111,7 @@ This section explains how to create a Dockerfile to containerize a Django applic
 
 ---
 
-### 4.1 Dockerfile Setup
+### Dockerfile Setup
 
 Create a file named `Dockerfile` in the root directory.
 
@@ -161,3 +163,4 @@ Set the default command to run database migrations and then start the Django dev
 ```Dockerfile
 CMD python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000
 ```
+---
